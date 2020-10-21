@@ -26,7 +26,7 @@
 #include <UWP/DumperIPC.hpp>
 
 
-const wchar_t* DLLFile = L"UWPDumper.dll";
+const wchar_t* DLLFile = L"NMSFix.dll";
 
 void SetAccessControl(
 	const std::wstring& ExecutableName,
@@ -86,22 +86,9 @@ int main(int argc, char** argv, char** envp)
 		{
 			if (std::string_view(argv[i]) == "-h")
 			{
-				std::cout << "use -p followed by a pid\n";
+				std::cout << "Usage:\n\tRun this program.\n";
 				system("pause");
 				return 0;
-			}
-			else if (std::string_view(argv[i]) == "-p")
-			{
-				if (i != argc)
-				{
-					ProcessID = (std::uint32_t)atoi(argv[i + 1]);
-				}
-				else
-				{
-					std::cout << "-p must be followed by a pid\n";
-					system("pause");
-					return 0;
-				}
 			}
 		}
 	}
@@ -117,15 +104,15 @@ int main(int argc, char** argv, char** envp)
 	);
 	SetConsoleOutputCP(437);
 
-	std::wcout << "\033[92mUWPInjector Build date (" << __DATE__ << " : " << __TIME__ << ')' << std::endl;
-	std::wcout << "\033[96m\t\033(0m\033(Bhttps://github.com/Wunkolo/UWPDumper\n";
+	std::wcout << "\033[92mAQDNMSMEMXGPPC Build date (" << __DATE__ << " : " << __TIME__ << ')' << std::endl;
+	std::wcout << "\033[96m\t\033(0m\033(Bhttps://github.com/AndASM/AQDNMSMEMXGPPC\n";
 	std::wcout << "\033[95m\033(0" << std::wstring(80, 'q') << "\033(B" << std::endl;
 
 	IPC::SetClientProcess(GetCurrentProcessId());
 
 	if (ProcessID == 0)
 	{
-		std::cout << "\033[93mCurrently running UWP Apps:" << std::endl;
+		std::cout << "\033[93mScanning for NMS:" << std::endl;
 		void* ProcessSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 		PROCESSENTRY32 ProcessEntry;
 		ProcessEntry.dwSize = sizeof(PROCESSENTRY32);
@@ -147,7 +134,8 @@ int main(int argc, char** argv, char** envp)
 						&NameLength,
 						nullptr
 					);
-					if (NameLength)
+
+					if ((NameLength != 0) && (_stricmp("nms.exe", ProcessEntry.szExeFile) == 0))
 					{
 						std::wcout
 							<< "\033[92m"
@@ -157,26 +145,20 @@ int main(int argc, char** argv, char** envp)
 						std::wcout
 							<< "\033[96m"
 							<< " \033(0x\033(B "
-							<< ProcessEntry.szExeFile << " :\n\t\t\033(0m\033(B";
-						std::unique_ptr<wchar_t[]> PackageName(new wchar_t[NameLength]());
+							<< ProcessEntry.szExeFile << " :\n";
 
-						ProcessCode = GetPackageFamilyName(
-							ProcessHandle,
-							&NameLength,
-							PackageName.get()
-						);
-
-						if (ProcessCode != ERROR_SUCCESS)
-						{
-							std::wcout << "GetPackageFamilyName Error: " << ProcessCode;
-						}
-
-						std::wcout << PackageName.get() << std::endl;
-
-						PackageName.reset();
+						ProcessID = ProcessEntry.th32ProcessID;
+						break;
 					}
+					CloseHandle(ProcessHandle);
 				}
-				CloseHandle(ProcessHandle);
+			}
+
+			if (ProcessID == 0)
+			{
+				std::cout << "\033[91mUnable to find NMS process (start the game first)." << std::endl;
+				system("pause");
+				return EXIT_FAILURE;
 			}
 		}
 		else
@@ -185,8 +167,6 @@ int main(int argc, char** argv, char** envp)
 			system("pause");
 			return EXIT_FAILURE;
 		}
-		std::cout << "\033[93mEnter ProcessID: \033[92m";
-		std::cin >> ProcessID;
 	}
 
 	SetAccessControl(GetRunningDirectory() + L'\\' + DLLFile, L"S-1-15-2-1");
@@ -215,8 +195,6 @@ int main(int argc, char** argv, char** envp)
 	}
 
 	std::cout << "Remote Dumper thread found: 0x" << std::hex << IPC::GetTargetThread() << std::endl;
-
-	std::filesystem::path LogFilePath = std::filesystem::current_path();
 
 	// Get package name for log file
 	if(
@@ -247,8 +225,6 @@ int main(int argc, char** argv, char** envp)
 			{
 				std::wcout << "GetPackageFamilyName Error: " << ProcessCode;
 			}
-			LogFilePath.append(PackageName.get());
-			LogFilePath.concat(" ");
 		}
 		CloseHandle(ProcessHandle);
 	}
@@ -267,22 +243,6 @@ int main(int argc, char** argv, char** envp)
 		struct tm TimeBuffer;
 		gmtime_s(&TimeBuffer, &CurrentTime);
 		TimeString << std::put_time(&TimeBuffer, "%Y%m%dT%H%M%S");
-		LogFilePath.concat(TimeString.str());
-	}
-
-	// Attempt to create file
-	LogFilePath.concat(".txt");
-	std::cout << LogFilePath << std::endl;
-	std::wofstream LogFile(LogFilePath);
-	if ( LogFile.is_open() )
-	{
-		std::cout << "\033[92mLogging to File: " << LogFilePath << "\033[0m" << std::endl;
-	}
-	else
-	{
-		std::cout << "\033[91mFailed to open log file\033[0m" << std::endl;;
-		system("pause");
-		return EXIT_FAILURE;
 	}
 
 	std::cout << "\033[0m" << std::flush;
@@ -293,10 +253,8 @@ int main(int argc, char** argv, char** envp)
 		while( IPC::PopMessage(CurMessage) )
 		{
 			std::wcout << CurMessage << "\033[0m";
-			LogFile << CurMessage << std::flush;
 		}
 	}
-	LogFile.close();
 	system("pause");
 	return EXIT_SUCCESS;
 }
