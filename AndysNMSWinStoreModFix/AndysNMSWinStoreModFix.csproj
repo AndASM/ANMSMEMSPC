@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<Version>0.0.2</Version>
+		<PackageId>ANMSMEMSPC</PackageId>
+		<Authors>AndASM</Authors>
+		<Product>ANMSMEMSPC</Product>
+		<PackageProjectUrl>https://github.com/AndASM/ANMSMEMSPC</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/AndASM/ANMSMEMSPC.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<AssemblyName>ANMSMEMSPC</AssemblyName>
+		<StartupObject>AndysNMSWinStoreModFix.Program</StartupObject>
+		<PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DebugType>none</DebugType>
+		<DebugSymbols>false</DebugSymbols>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<TrimmerRootAssembly Include="mscorlib;System.Runtime.InteropServices.WindowsRuntime" />
+		<PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.19041.1" />
+		<None Include="../*.md" pack="true" PackagePath=".">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</None>
+	</ItemGroup>
+</Project>
