@@ -9,25 +9,15 @@ using System.Text.RegularExpressions;
 
 namespace AndysNMSWinStoreModFix
 {
-    static class ColorConsole
+    internal static class ColorConsole
     {
         private const int STD_OUTPUT_HANDLE = -11;
         private const uint ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004;
         private const uint DISABLE_NEWLINE_AUTO_RETURN = 0x0008;
 
-
-        [DllImport("kernel32.dll")]
-        private static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
-
-        [DllImport("kernel32.dll")]
-        private static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
-
-        [DllImport("kernel32.dll")]
-        private static extern IntPtr GetStdHandle(int nStdHandle);
-
-        public static readonly string NewLine = System.Environment.NewLine;
-
         public const char Esc = '\u001b';
+
+        public static readonly string NewLine = Environment.NewLine;
         public static readonly string Normal = $"{Esc}[0m";
         public static readonly string Underline = $"{Esc}[4m";
         public static readonly string NoUnderline = $"{Esc}[24m";
@@ -40,16 +30,27 @@ namespace AndysNMSWinStoreModFix
         public static readonly string FgBrightCyan = $"{Esc}[96m";
         public static readonly string FgBrightWhite = $"{Esc}[97m";
 
-        private static StringBuilder ErrorLogBuilder;
+        private static readonly StringBuilder ErrorLogBuilder;
 
         static ColorConsole()
         {
             // Enable VT100
             var stdOutHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-            GetConsoleMode(stdOutHandle, out uint ConsoleMode);
-            SetConsoleMode(stdOutHandle, ConsoleMode | ENABLE_VIRTUAL_TERMINAL_PROCESSING | DISABLE_NEWLINE_AUTO_RETURN);
+            GetConsoleMode(stdOutHandle, out var ConsoleMode);
+            SetConsoleMode(stdOutHandle,
+                ConsoleMode | ENABLE_VIRTUAL_TERMINAL_PROCESSING | DISABLE_NEWLINE_AUTO_RETURN);
             ErrorLogBuilder = new StringBuilder();
         }
+
+
+        [DllImport("kernel32.dll")]
+        private static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
+
+        [DllImport("kernel32.dll")]
+        private static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
+
+        [DllImport("kernel32.dll")]
+        private static extern IntPtr GetStdHandle(int nStdHandle);
 
         private static void Write(string text)
         {
@@ -57,15 +58,20 @@ namespace AndysNMSWinStoreModFix
             Console.Write(text);
         }
 
-        private static void WriteLine(string text) =>
+        private static void WriteLine(string text)
+        {
             Write($"{text}{NewLine}");
+        }
 
         public static void WriteIntroduction()
         {
-            WriteLine($"{FgBrightYellow}ANMSMEMSPC ({Normal}v{Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion}{FgBrightYellow}): " +
-                      $"{FgBrightCyan}Andy's NMS Mod Enabler for the Microsoft Store / Xbox GamePass PC edition.");
-            WriteLine($"{Normal}Nexus Mods: {FgBrightWhite}{Underline}https://www.nexusmods.com/nomanssky/mods/1751{NoUnderline} ");
-            WriteLine($"{Normal}Source Code: {FgBrightWhite}{Underline}https://github.com/AndASM/ANMSMEMSPC{NoUnderline}{Normal} ");
+            WriteLine(
+                $"{FgBrightYellow}ANMSMEMSPC ({Normal}v{Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion}{FgBrightYellow}): " +
+                $"{FgBrightCyan}Andy's NMS Mod Enabler for the Microsoft Store / Xbox GamePass PC edition.");
+            WriteLine(
+                $"{Normal}Nexus Mods: {FgBrightWhite}{Underline}https://www.nexusmods.com/nomanssky/mods/1751{NoUnderline} ");
+            WriteLine(
+                $"{Normal}Source Code: {FgBrightWhite}{Underline}https://github.com/AndASM/ANMSMEMSPC{NoUnderline}{Normal} ");
             WriteLine("License: GPL-3.0-only");
             WriteBlankLine();
         }
@@ -83,13 +89,21 @@ namespace AndysNMSWinStoreModFix
             WriteBlankLine();
         }
 
-        public static void WriteInfo(string info) => WriteLine($"{Normal}{info}");
+        public static void WriteInfo(string info)
+        {
+            WriteLine($"{Normal}{info}");
+        }
 
-        public static void WriteNameValue(string name, string value) =>
+        public static void WriteNameValue(string name, string value)
+        {
             WriteLine($"{Normal}{name}:{NewLine}" +
-                              $"{FgBrightWhite}\t{value}{Normal}");
+                      $"{FgBrightWhite}\t{value}{Normal}");
+        }
 
-        public static void WriteBlankLine() => WriteLine("");
+        public static void WriteBlankLine()
+        {
+            WriteLine("");
+        }
 
         public static void WriteTryExcept(string actionText, string success, Action actionCode)
         {
@@ -110,7 +124,8 @@ namespace AndysNMSWinStoreModFix
             var errorLogFile = new FileInfo("ErrorLog.txt");
 
             WriteLine($"{FgBrightRed}Error!");
-            WriteLine($"Please check {Normal}{Underline}https://github.com/AndASM/ANMSMEMSPC/issues{NoUnderline}{FgBrightRed} for this issue.");
+            WriteLine(
+                $"Please check {Normal}{Underline}https://github.com/AndASM/ANMSMEMSPC/issues{NoUnderline}{FgBrightRed} for this issue.");
             WriteLine("If it hasn't been reported, please click the New Issue button and report it.");
             WriteLine("Please include the error log available here:");
             WriteLine($"{FgBrightWhite}{errorLogFile.FullName}{FgBrightRed}");
