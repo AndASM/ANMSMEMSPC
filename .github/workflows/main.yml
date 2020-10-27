@@ -18,6 +18,7 @@ jobs:
         run: |
           cd "$env:GITHUB_WORKSPACE"
           $msbuild = vswhere -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe | select-object -first 1
+          & $msbuild .\AndysNMSWinStoreModFix.sln -Property:Configuration=Release -t:restore
           & $msbuild .\AndysNMSWinStoreModFix.sln -Property:Configuration=Release -t:Build
       
       - name: Get tag
