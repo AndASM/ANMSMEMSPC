@@ -3,6 +3,8 @@ Changelog format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 Version scheme: [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Unreleased]
+
+## [0.0.4] - 2020-10-26
 ### Added
 - Github publishing action for releases
 - MSBuild action to create Release.zip
@@ -36,6 +38,7 @@ Version scheme: [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - Created an initial proof-of-concept using UWPDumper
 
 [Unreleased]: https://github.com/AndASM/ANMSMEMSPC
+[0.0.4]: https://github.com/AndASM/ANMSMEMSPC/v0.0.3...v0.0.4
 [0.0.3]: https://github.com/AndASM/ANMSMEMSPC/v0.0.2...v0.0.3
 [0.0.2]: https://github.com/AndASM/ANMSMEMSPC/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/AndASM/ANMSMEMSPC/releases/v0.0.1
