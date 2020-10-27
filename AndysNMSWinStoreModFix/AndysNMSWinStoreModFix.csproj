@@ -4,7 +4,7 @@
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net48</TargetFramework>
+		<TargetFramework>net472</TargetFramework>
 		<LangVersion>8.0</LangVersion>
 		<Version>0.0.3</Version>
 		<PackageId>ANMSMEMSPC</PackageId>
@@ -50,12 +50,17 @@
 		<Reference Include="System.Xml" />
 		<PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.18362.2005" />
 		
-		<None Include="../*.md" pack="true" PackagePath=".">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</None>
 		<None Remove="publish/**" />
 	</ItemGroup>
+
+	<Target Name="PreReleaseBuild" AfterTargets="PreBuildEvent" Condition="'$(Configuration)'=='Release'">
+		<ItemGroup>
+			<None Include="../*.md" pack="true" >
+				<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+				<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+			</None>
+		</ItemGroup>
+	</Target>
 	
 	<Target Name="PostReleaseBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'=='Release'">
 		<ItemGroup>
