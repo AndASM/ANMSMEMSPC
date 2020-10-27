@@ -37,7 +37,6 @@ namespace AndysNMSWinStoreModFix
         public string FamilyName => _uwpPackage.Id.FamilyName;
 
         public StorageFolder PcBanksFolder =>
-            _appData.LocalCacheFolder.GetFolderAsync(
-                @"Local\Microsoft\WritablePackageRoot\GAMEDATA\PCBANKS").GetAwaiter().GetResult();
+            _appData.LocalCacheFolder.CreateFolderPath(@"Local\Microsoft\WritablePackageRoot\GAMEDATA\PCBANKS");
     }
 }
