@@ -22,9 +22,10 @@ jobs:
           & $msbuild .\AndysNMSWinStoreModFix.sln -Property:Configuration=Release -t:Build
       
       - name: Get tag
+        id: get-tag
         run: |
           $env:RELEASE_TAG=$($env:GITHUB_REF.Substring(10))
-          echo "::set-env name=RELEASE_TAG::$($env:RELEASE_TAG)"
+          echo "::set-output name=RELEASE_TAG::$($env:RELEASE_TAG)"
       
       - name: Extract release notes
         id: extract-release-notes
@@ -36,8 +37,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.RELEASE_TAG }}
-          release_name: Release ${{ env.RELEASE_TAG }}
+          tag_name: ${{ steps.get-tag.outputs.RELEASE_TAG }}
+          release_name: Release ${{ steps.get-tag.outputs.RELEASE_TAG }}
           body: ${{ steps.extract-release-notes.outputs.release_notes }}
           draft: true
           prerelease: false
@@ -49,6 +50,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.GITHUB_WORKSPACE }}/Release.zip
-          asset_name: ANMSMEMSPC-${{ env.RELEASE_TAG }}.zip
+          asset_path: ./Release.zip
+          asset_name: ANMSMEMSPC-${{ steps.get-tag.outputs.RELEASE_TAG }}.zip
           asset_content_type: application/zip
