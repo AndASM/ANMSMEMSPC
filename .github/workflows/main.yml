@@ -28,7 +28,7 @@ jobs:
       
       - name: Extract release notes
         id: extract-release-notes
-        uses: ffurrer2/extract-release-notes@v1
+        uses: ffurrer2/extract-release-notes@v1.4.0-rc.1
       
       - name: Create Release
         id: create_release
