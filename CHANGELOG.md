@@ -3,6 +3,16 @@ Changelog format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 Version scheme: [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Unreleased]
+### Added
+- AndASM-NMS library
+  * See library changelog
+  * Non-UI code moved to library
+- Created new WPF XAML GUI
+  * Can toggle mods
+  * Option to open mods folder
+  * Option to create desktop shortcut to mods folder
+### Removed
+- Console application
 
 ## [0.0.4] - 2020-10-26
 ### Added
@@ -38,6 +48,7 @@ Version scheme: [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - Created an initial proof-of-concept using UWPDumper
 
 [Unreleased]: https://github.com/AndASM/ANMSMEMSPC
+[0.1.0]: https://github.com/AndASM/ANMSMEMSPC/v0.0.4...v0.1.0
 [0.0.4]: https://github.com/AndASM/ANMSMEMSPC/v0.0.3...v0.0.4
 [0.0.3]: https://github.com/AndASM/ANMSMEMSPC/v0.0.2...v0.0.3
 [0.0.2]: https://github.com/AndASM/ANMSMEMSPC/v0.0.1...v0.0.2

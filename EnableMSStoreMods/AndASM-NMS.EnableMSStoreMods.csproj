@@ -1,5 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
-
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
 
@@ -8,24 +7,16 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.18.1" PrivateAssets="All" />
+		<ProjectReference Include="$(AndASM-NMS-Dir)Windows\AndASM-NMS.Windows.csproj" />
 	</ItemGroup>
 
-	<Target Name="TellMe">
-		<Message Text="AndASM Windows Project: $(AndASM-NMSDir)Windows\AndASM-NMS.Windows.csproj" />
-	</Target>
-
-	<ItemGroup>
-		<ProjectReference Include="$(AndASM-NMSDir)Windows\AndASM-NMS.Windows.csproj" />
-	</ItemGroup>
-
-	<Import Project="$(AndASM-NMSDir)Targets\Zip.targets" Condition="'$(Configuration)'=='Release'" />
-
-	<Target Name="ZipOutput" AfterTargets="CleanReferenceCopyLocalPathsILRepacker" Condition="'$(Configuration)'=='Release'" >
+	<Target Name="ZipOutput" AfterTargets="CleanReferenceCopyLocalPathsILRepacker"
+	        Condition="'$(Configuration)'=='Release'">
 		<ItemGroup>
 			<ZipFiles Include="$(OutDir)\*.*" />
 		</ItemGroup>
-		
-		<Zip OutputFileName="$(SolutionDir)\EnableMSStoreMods-Release.zip" InputFileNames="@(ZipFiles)" OverwriteExistingFile="True" CompressionLevel="Optimal" />
+
+		<Zip OutputFileName="$(SolutionDir)\EnableMSStoreMods-Release.zip" InputFileNames="@(ZipFiles)"
+		     OverwriteExistingFile="True" CompressionLevel="Optimal" />
 	</Target>
 </Project>
