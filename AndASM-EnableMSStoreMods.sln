@@ -16,11 +16,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AndASM-NMS.Windows", "..\AndASM-NMS\Windows\AndASM-NMS.Windows.csproj", "{85061B67-A740-4FCB-AEB6-50FE71048FCD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AndASM-NMS.Windows", "AndASM-NMS\Windows\AndASM-NMS.Windows.csproj", "{85061B67-A740-4FCB-AEB6-50FE71048FCD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{FA08DA9C-D92D-430F-8D5A-8DF797D7C6D3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AndASM-NMS.Util", "..\AndASM-NMS\Util\AndASM-NMS.Util.csproj", "{C078447F-0CC7-47D0-A7DA-5E69181984AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AndASM-NMS.Util", "AndASM-NMS\Util\AndASM-NMS.Util.csproj", "{C078447F-0CC7-47D0-A7DA-5E69181984AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
