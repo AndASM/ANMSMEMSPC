@@ -1,0 +1,14 @@
+<!--EXTERNAL_PROPERTIES: MSBuildThisFileDirectory-->
+<Project>
+	<PropertyGroup>
+		<TargetFramework>net472</TargetFramework>
+
+		<SolutionDir Condition="'$(SolutionDir)' == ''">$(MSBuildThisFileDirectory)</SolutionDir>
+		<AndASM-NMSDir>$(SolutionDir)AndASM-NMS\</AndASM-NMSDir>
+		<OutputPath Condition="'$(OutputPath)' == ''">$(SolutionDir)$(Configuration)\$(MSBuildProjectName)</OutputPath>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<BaseIntermediateOutputPath>$(SolutionDir)obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
+		<CustomAfterMicrosoftCommonProps>$(AndASM-NMSDir)Common.Solution.props</CustomAfterMicrosoftCommonProps>
+		<CustomAfterMicrosoftCommonTargets>$(AndASM-NMSDir)Common.Solution.targets</CustomAfterMicrosoftCommonTargets>
+	</PropertyGroup>
+</Project>

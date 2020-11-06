@@ -1,0 +1,74 @@
+<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:windows="clr-namespace:AndASM_NMS.Windows;assembly=AndASM-NMS.Windows"
+	x:Class="AndASM_NMS.EnableMSStoreMods.MainWindow"
+	mc:Ignorable="d"
+	Title="ANMSMEMSPC - No Man's Sky Mod Enabler" ResizeMode="NoResize" SizeToContent="WidthAndHeight">
+	<Window.DataContext>
+		<windows:NmsUwpPackage />
+	</Window.DataContext>
+	<Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+		<Grid.RowDefinitions>
+			<RowDefinition />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+		<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+			<WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+				<Label Content="Microsoft Store/GamePass No Man's Sky detected:" />
+				<Grid>
+					<Label FontFamily="Segoe MDL2 Assets">
+						<Label.Style>
+							<Style TargetType="{x:Type Label}">
+								<Setter Property="Content" Value="&#xEB90;" />
+								<Setter Property="Foreground" Value="Red" />
+								<Style.Triggers>
+									<DataTrigger Binding="{Binding IsInstalled}" Value="true">
+										<Setter Property="Content" Value="&#xEC61;" />
+										<Setter Property="Foreground" Value="Green" />
+									</DataTrigger>
+								</Style.Triggers>
+							</Style>
+						</Label.Style>
+					</Label>
+					<Label FontFamily="Segoe MDL2 Assets" Content="&#xEA3A;" />
+				</Grid>
+			</WrapPanel>
+			<WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+				<Label Content="Mods enabled:" />
+				<Grid>
+					<Label FontFamily="Segoe MDL2 Assets">
+						<Label.Style>
+							<Style TargetType="{x:Type Label}">
+								<Setter Property="Content" Value="&#xEB90;" />
+								<Setter Property="Foreground" Value="Red" />
+								<Style.Triggers>
+									<DataTrigger Binding="{Binding IsModdingEnabled}" Value="true">
+										<Setter Property="Content" Value="&#xEC61;" />
+										<Setter Property="Foreground" Value="Green" />
+									</DataTrigger>
+								</Style.Triggers>
+							</Style>
+						</Label.Style>
+					</Label>
+					<Label FontFamily="Segoe MDL2 Assets" Content="&#xEA3A;" />
+				</Grid>
+			</WrapPanel>
+		</StackPanel>
+
+		<StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center"
+		            VerticalAlignment="Center">
+			<StackPanel.Resources>
+				<Style TargetType="{x:Type Button}">
+					<Setter Property="Margin" Value="2,0,2,2" />
+					<Setter Property="Padding" Value="4,2,4,2" />
+				</Style>
+			</StackPanel.Resources>
+			<Button Content="Toggle Mods" Click="ToggleModsClick" />
+			<Button Content="Open Mods Folder" Click="OpenModsClick" />
+			<Button Content="Create Desktop Shortcut" Click="ShortcutModsClick" />
+		</StackPanel>
+	</Grid>
+</Window>

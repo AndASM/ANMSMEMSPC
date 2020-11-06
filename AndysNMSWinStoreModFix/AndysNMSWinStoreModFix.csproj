@@ -1,6 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
-	<Import Project="$(SolutionDir)\MSBuild\Zip.targets" Condition="'$(Configuration)'=='Release'" />
+	<Import Project="$(AndASM-NMSDir)\Targets\Zip.targets" Condition="'$(Configuration)'=='Release'" />
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
@@ -55,7 +55,7 @@
 
 	<Target Name="PreReleaseBuild" AfterTargets="PreBuildEvent" Condition="'$(Configuration)'=='Release'">
 		<ItemGroup>
-			<None Include="../*.md" pack="true" >
+			<None Include="$(SolutionDir)*.md" pack="true">
 				<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 				<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 			</None>

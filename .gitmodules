@@ -1,0 +1,3 @@
+[submodule "AndASM-NMS"]
+	path = AndASM-NMS
+	url = https://github.com/AndASM/AndASM-NMS.git
