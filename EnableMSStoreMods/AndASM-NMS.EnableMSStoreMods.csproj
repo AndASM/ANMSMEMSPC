@@ -1,9 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
 
 		<RootNamespace>AndASM_NMS.EnableMSStoreMods</RootNamespace>
 		<UseWPF>true</UseWPF>
+
+		<ILRepackLink>true</ILRepackLink>
 	</PropertyGroup>
 
 	<ItemGroup>
