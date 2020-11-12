@@ -5,20 +5,18 @@
 		<RootNamespace>AndASM_NMS.EnableMSStoreMods</RootNamespace>
 		<UseWPF>true</UseWPF>
 
-		<ILRepackLink>true</ILRepackLink>
+		<ILRepackLink Condition="'$(Configuration)' == 'Release'">true</ILRepackLink>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="$(AndASM-NMS-Dir)Windows\AndASM-NMS.Windows.csproj" />
 	</ItemGroup>
 
-	<Target Name="ZipOutput" AfterTargets="CleanReferenceCopyLocalPathsILRepacker"
-	        Condition="'$(Configuration)'=='Release'">
+	<Target Name="ZipOutput" AfterTargets="CleanReferenceCopyLocalPathsILRepacker" Condition="'$(Configuration)'=='Release'">
 		<ItemGroup>
 			<ZipFiles Include="$(OutDir)\*.*" />
 		</ItemGroup>
 
-		<Zip OutputFileName="$(SolutionDir)\EnableMSStoreMods-Release.zip" InputFileNames="@(ZipFiles)"
-		     OverwriteExistingFile="True" CompressionLevel="Optimal" />
+		<Zip OutputFileName="$(SolutionDir)\EnableMSStoreMods-Release.zip" InputFileNames="@(ZipFiles)" OverwriteExistingFile="True" CompressionLevel="Optimal" />
 	</Target>
 </Project>

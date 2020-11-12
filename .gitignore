@@ -35,6 +35,9 @@ bld/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
+# Visual Studio Code - a name to dilute the brand and destroy the searchability
+.vscode/
+
 # Uncomment if you have tasks that create the project's static files in wwwroot
 #wwwroot/
 
@@ -129,6 +132,9 @@ $tf/
 _ReSharper*/
 *.[Rr]e[Ss]harper
 *.DotSettings.user
+
+# JustCode is a .NET coding add-in
+.JustCode
 
 # TeamCity is a build add-in
 _TeamCity*
@@ -337,6 +343,7 @@ ASALocalRun/
 
 # MSBuild Binary and Structured Log
 *.binlog
+output.xml
 
 # NVidia Nsight GPU debugger configuration file
 *.nvuser

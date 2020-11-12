@@ -28,6 +28,7 @@ namespace AndASM_NMS.EnableMSStoreMods
 			errorOutput.WriteLine($"{e.Exception}");
 
 			errorOutput.Flush();
+			throw e.Exception;
 		}
 	}
 }
